@@ -1,18 +1,21 @@
 import os
 import re
 import subprocess
-from cmd_database import insert_commands_bulk
+from add_to_database import insert_commands_bulk
 from pathlib import Path
 
 
 def list_available_shells():
+    zdotdir = os.environ.get("ZDOTDIR")
+
     shells = {
         "bash": Path(os.path.expanduser("~/.bash_history")),
+
         "zsh": Path(
-            f"{os.environ['ZDOTDIR']}/.zsh_history"
-            if os.environ["ZDOTDIR"]
+            f"{zdotdir}/.zsh_history"
+            if zdotdir
             else os.path.expanduser("~/.zsh_history")
-        ),
+            ),
         "fish": Path(os.path.expanduser("~/.local/share/fish/fish_history")),
     }
     return {shell: path for shell, path in shells.items() if os.path.exists(path)}

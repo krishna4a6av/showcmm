@@ -7,15 +7,15 @@ import sys
 from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.layout import Layout
-from theme import console
-from cmd_database import get_db_connection
+from theme.one import console
+from functions.add_to_database import get_db_connection
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 DB_FILE = os.path.join(BASE_DIR, "commands.db")
-HISTORY_SCRIPT = os.path.join(BASE_DIR, "history.py")
+HISTORY_SCRIPT = os.path.join(BASE_DIR, "functions/history.py")
 VIEW_SCRIPT = os.path.join(BASE_DIR, "view_history.py")
-CLEAR_DB_SCRIPT = os.path.join(BASE_DIR, "clear_db.py")
+CLEAR_DB_SCRIPT = os.path.join(BASE_DIR, "functions/clear_db.py")
 
 
 def clear_screen():

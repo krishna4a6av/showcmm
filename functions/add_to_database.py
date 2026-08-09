@@ -3,7 +3,7 @@ import os
 
 # Always resolve DB path relative to the actual script location
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-DB_FILE = os.path.join(BASE_DIR, "commands.db")
+DB_FILE = os.path.join(BASE_DIR, "../commands.db")
 
 
 def get_db_connection():

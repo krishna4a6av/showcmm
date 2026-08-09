@@ -1,6 +1,6 @@
 import os
 
-DB_FILE = "commands.db"
+DB_FILE = "../commands.db"
 
 def clear_database_file():
     if os.path.exists(DB_FILE):

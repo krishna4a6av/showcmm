@@ -7,7 +7,7 @@ from rich.console import Group
 from rich.panel import Panel
 from rich.progress import BarColumn, Progress
 from rich.text import Text
-from theme import console
+from theme.one import console
 
 # Get absolute path to database file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
