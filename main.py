@@ -1,6 +1,6 @@
 import argparse
 
-from history import read_history
+from functions import history
 from functions import show_commands
 from db.database import delete_database
 
@@ -9,21 +9,20 @@ def handle_update() -> None:
     if confirm.lower() in {"y", "yes"}:
         cleared = delete_database()
         if cleared:
-            print("Db removed sucessfully")
+            print("Database removed successfully.")
         else:
-            print("No db file exists")
+            print("No datatbase file exists")
 
     try:
-        read_history()
-        print("History added sucessfully!")
+        history.read_history()
+        print("History added sucessfully.")
     except ValueError as e:
         print(f"{e}")
 
 def handle_view(args) -> None:
     try:
         if args.top:
-            lmt = args.limit if args.limit else 10
-            show_commands.top_commands(lmt)
+            show_commands.top_commands(args.limit)
         elif args.all:
             show_commands.list_commands()
         elif args.filter:
@@ -31,14 +30,14 @@ def handle_view(args) -> None:
         else:
             show_commands.top_commands(10)
     except ValueError as e:
-        print(F"{e}")
+        print(f"{e}")
 
 def handle_delete() -> None:
     confirm = input("Delete all command history (only the `showcmm` history will be removed)?")
     if confirm.lower() in {"y", "yes"}:
         cleared = delete_database()
         if cleared:
-            print("Db removed sucessfully")
+            print("Database removed sucessfully")
         else:
             print("No db file exists")
     else:
@@ -67,7 +66,6 @@ def main():
             handle_view(args)
         case "delete":
             handle_delete()
-
 
 
 if __name__ == "__main__":
