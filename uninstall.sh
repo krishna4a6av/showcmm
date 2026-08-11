@@ -23,5 +23,5 @@ else
     echo "Skipping project folder removal."
 fi
 
-echo "🎉 Uninstallation complete."
+echo "Uninstallation complete."
 

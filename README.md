@@ -24,7 +24,7 @@ I made this as a project for fun, simply to be able to see most used commands an
 Main feature include:
  - Allowing to see command history in tabular form from all shells(bash/zsh/fish)
  - extensive elaboration on commandline habbits 
- - Allowing one to track most used commands with style (Gruvbox theme)
+ - Allowing one to track most used commands
 
 
 Dependencies you might need (Not needed to be added manually, setup.sh will take care of them)
