@@ -1,27 +1,37 @@
 #!/bin/bash
 
-# Uninstall script for command_tracker
+# Uninstall script for showcmm
 
-echo "🔧 Uninstalling Command Tracker..."
+echo "🔧 Uninstalling showcmm..."
 
-# Remove symbolic link
-if [ -L /usr/local/bin/showcmm ]; then
+# Remove global showcmm command
+if [ -f /usr/local/bin/showcmm ]; then
     sudo rm /usr/local/bin/showcmm
     echo "✅ Removed 'showcmm' command from /usr/local/bin"
 else
-    echo "⚠️ 'showcmm' symlink not found in /usr/local/bin"
+    echo "⚠️ 'showcmm' command not found in /usr/local/bin"
 fi
 
-# Optionally, ask to remove the cloned project directory
-read -p "Do you want to remove the command_tracker project folder? (y/N): " del_proj
+# Ask before removing project directory
+read -p "Do you want to remove the showcmm project folder? (y/N): " del_proj
+
 if [[ "$del_proj" == "y" || "$del_proj" == "Y" ]]; then
-    proj_dir=$(dirname "$(realpath "$0")")
+    proj_dir="$(cd "$(dirname "$0")" && pwd)"
+
     echo "Deleting $proj_dir..."
     rm -rf "$proj_dir"
+
     echo "✅ Project folder removed."
 else
     echo "Skipping project folder removal."
 fi
 
-echo "Uninstallation complete."
+# Remove man page
+MAN_PAGE="/usr/local/share/man/man1/showcmm.1.gz"
 
+if [ -f "$MAN_PAGE" ]; then
+    sudo rm "$MAN_PAGE"
+    echo "✅ Removed man page."
+fi
+
+echo "Uninstallation complete."
