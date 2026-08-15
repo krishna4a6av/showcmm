@@ -1,21 +1,17 @@
-import os
-import re
 from pathlib import Path
 
 from db.database import insert_commands_bulk
 import utils.parser as parser
+from utils.read_toml import get_shells
 
-ZSH_PATTERN = re.compile(r"^: \d+:\d+;")
+def list_available_shells() -> dict[str, dict]:
+    shells = get_shells()
 
-def list_available_shells() -> dict:
-    zdotdir = os.environ.get("ZDOTDIR")
-
-    shells = {
-        "bash": Path(os.path.expanduser("~/.bash_history")),
-        "zsh": Path(f"{zdotdir}/.zsh_history" if zdotdir else os.path.expanduser("~/.zsh_history")),
-        "fish": Path(os.path.expanduser("~/.local/share/fish/fish_history")),
+    return {
+        name: config
+        for name, config in shells.items()
+        if Path(config["path"]).expanduser().exists()
     }
-    return {shell: path for shell, path in shells.items() if os.path.exists(path)}
 
 
 def choose_shells(available_shells: dict) -> dict:
@@ -27,7 +23,9 @@ def choose_shells(available_shells: dict) -> dict:
 
     print("Available shell histories:")
     for i, shell in enumerate(available_shells, 1):
-        print(f"{i}. {shell} ({available_shells[shell]})")
+        print(f"{i}. {shell} "
+        f"({Path(available_shells[shell]['path']).expanduser()})"
+)
     print("0. All shells\n")
 
     try:
@@ -47,27 +45,27 @@ def choose_shells(available_shells: dict) -> dict:
     return selected
 
 
-def import_history(shell_name: str, file_path: Path) -> None:
+def import_history(shell_config: dict) -> None:
+    file_path = Path(shell_config["path"]).expanduser()
+    parser_name = shell_config["parser"]
+
+    if parser_name not in parser.PARSERS:
+        raise ValueError(f"Unknown parser: {parser_name}")
+
+    parse = parser.PARSERS[parser_name]
+
     batch = []
-    batch_size = 100
 
     with open(file_path, "r", encoding="utf-8", errors="ignore") as file:
         for line in file:
-            command = ""
-            if shell_name == "fish":
-                prefix = "- cmd: "
-                if not line.startswith(prefix):
-                    continue
-
-                command = line[len(prefix):].strip()
-            else:
-                command = ZSH_PATTERN.sub("", line.strip())
+            command = parse(line)
 
             if command and parser.is_valid_command(command):
                 batch.append(command)
 
-            if len(batch) >= batch_size:
+            if len(batch) >= 100:
                 insert_commands_bulk(batch)
                 batch = []
+
     if batch:
         insert_commands_bulk(batch)
