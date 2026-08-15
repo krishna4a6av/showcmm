@@ -62,7 +62,7 @@ path = "~/.myshell_history"
 parser = "plain"
 ```
 
-- Add your own parsing logif for different shell in "utils/parser.py".
+- Add your own parsing logic for different shell in "utils/parser.py".
 
 ## License
 
@@ -70,4 +70,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 
 
-Plase feel free to clone/fork this simple proj and adding your twists :)
+Please feel free to clone/fork this simple proj and adding your twists :)
