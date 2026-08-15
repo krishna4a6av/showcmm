@@ -61,39 +61,6 @@ chmod +x uninstall.sh
 
 ## Configuration, Models & Prompts
 
-AI configuration is defined in `config.py`.
-
-You can change the AI provider, model, and prompts to suit your preferences.
-
-### Model Configuration
-
-By default, `showcmm` uses OpenRouter's free model routing:
-
-```python
-MODEL = "openrouter/free"
-BASE_URL = "https://openrouter.ai/api/v1"
-```
-You can change MODEL to any model supported by your chosen OpenAI-compatible provider and update BASE_URL accordingly. For example:
-```
-MODEL = "your-model"
-BASE_URL = "https://your-provider.example.com/v1"
-```
-
-Or A local model as follow:
-```
-MODEL = "your-local-model"
-BASE_URL = "http://localhost:1234/v1"
-```
-
-### API_KEY
-The API key is loaded from a .env file:
-
-```
-API_KEY=your_api_key
-```
-
-AI features are optional; command tracking and local statistics do not require an AI API key.
-
 ### Adding Another Shell
 
 Shell configuration is stored at:
@@ -123,6 +90,41 @@ If none of the existing parsers work for your shell, you can add your own parsin
 ```
 utils/parser.py
 ```
+
+### AI config
+AI configuration is defined in `config.py`.
+
+You can change the AI provider, model, and prompts to suit your preferences.
+
+#### Model Configuration
+
+By default, `showcmm` uses OpenRouter's free model routing:
+
+```python
+MODEL = "openrouter/free"
+BASE_URL = "https://openrouter.ai/api/v1"
+```
+You can change MODEL to any model supported by your chosen OpenAI-compatible provider and update BASE_URL accordingly. For example:
+```
+MODEL = "your-model"
+BASE_URL = "https://your-provider.example.com/v1"
+```
+
+Or A local model as follow:
+```
+MODEL = "your-local-model"
+BASE_URL = "http://localhost:1234/v1"
+```
+
+### API_KEY
+The API key is loaded from a .env file:
+
+```
+API_KEY=your_api_key
+```
+
+AI features are optional; command tracking and local statistics do not require an AI API key.
+
 
 
 ## License
