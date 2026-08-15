@@ -42,27 +42,81 @@ chmod +x uninstall.sh
 - Man page
 - Local SQLite database
 
+## Avalible commands: 
 
-## Adding Another Shell
+| Command                       | Description                    |
+| ----------------------------- | ------------------------------ |
+| `showcmm view`                | Show top 10 commands           |
+| `showcmm view --top`          | Show top commands              |
+| `showcmm view --all`          | Show all commands              |
+| `showcmm view --filter QUERY` | Filter commands                |
+| `showcmm update`              | Import shell history           |
+| `showcmm delete`              | Delete command history         |
+| `showcmm ai --roast`          | Roast your command-line habits |
+| `showcmm ai --learn`          | Suggest things to learn        |
+| `showcmm ai --workflow`       | Analyze your workflows         |
+| `showcmm ai --level`          | Assess your CLI skill level    |
+| `showcmm ai --alias`          | Suggest useful aliases         |
 
-The shell configuration is stored at:
 
-```text
-~/.config/showcmm/config.toml
+## Configuration, Models & Prompts
+
+AI configuration is defined in `config.py`.
+
+You can change the AI provider, model, and prompts to suit your preferences.
+
+### Model Configuration
+
+By default, `showcmm` uses OpenRouter's free model routing:
+
+```python
+MODEL = "openrouter/free"
+BASE_URL = "https://openrouter.ai/api/v1"
 ```
-Add other shell in the config.toml with the parser that suits the file.
-'plain': simple line-by-line parsing, suitable for Bash-style history
-'zsh': parses Zsh history timestamps
-'fish': parses Fish history files
+You can change MODEL to any model supported by your chosen OpenAI-compatible provider and update BASE_URL accordingly. For example:
+```
+MODEL = "your-model"
+BASE_URL = "https://your-provider.example.com/v1"
+```
 
-example toml:
+Or A local model as follow:
+```
+MODEL = "your-local-model"
+BASE_URL = "http://localhost:1234/v1"
+```
+
+### API_KEY
+The API key is loaded from a .env file:
+
+```API_KEY=your_api_key```
+
+AI features are optional; command tracking and local statistics do not require an AI API key.
+
+### Adding Another Shell
+
+Shell configuration is stored at:
+
+```~/.config/showcmm/config.toml````
+
+Add another shell to config.toml and specify the parser that matches its history format.
+
+- Available Parsers
+| Parser | Description |
+| --- | --- |
+| `plain` | Simple line-by-line parsing, suitable for Bash-style history |
+| `zsh` | Parses Zsh history timestamps |
+| `fish` | Parses Fish history files |
+
+For example:
 ```
 [shells.myshell]
 path = "~/.myshell_history"
 parser = "plain"
 ```
 
-- Add your own parsing logic for different shell in "utils/parser.py".
+If none of the existing parsers work for your shell, you can add your own parsing logic in:
+```utils/parser.py```
+
 
 ## License
 
