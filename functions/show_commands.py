@@ -1,9 +1,8 @@
 import db.database as db
 import utils.parser as parser
-import utils.display as display
 
 
-def list_commands() -> None:
+def list_commands() ->  list[tuple[str, int]]:
     commands = db.get_all_commands()
     if not commands:
         raise ValueError("No commands found in the database.")
@@ -15,10 +14,10 @@ def list_commands() -> None:
             summary[key] = summary.get(key, 0) + count
     grouped = sorted(summary.items(), key=lambda x: x[0])
 
-    display.display_table(grouped)
+    return grouped
 
 
-def top_commands(limit: int) -> None:
+def top_commands(limit: int) ->  list[tuple[str, int]]:
     commands = db.get_all_commands()
     if not commands:
         raise ValueError("No commands found in the database.")
@@ -30,10 +29,10 @@ def top_commands(limit: int) -> None:
             summary[key] = summary.get(key, 0) + count
 
     grouped = sorted(summary.items(), key=lambda x: x[1], reverse=True)
-    display.display_table(grouped[:limit])
+    return grouped[:limit]
 
 
-def show_filtered_commands(query: str) -> None:
+def show_filtered_commands(query: str, limit: int) ->  list[tuple[str, int]]:
     if not query:
         raise ValueError("No filter provided.")
 
@@ -41,4 +40,4 @@ def show_filtered_commands(query: str) -> None:
     if not commands:
         raise ValueError("No command found")
 
-    display.display_table(commands)
+    return commands[:limit]

@@ -69,10 +69,3 @@ def get_filter_commands(query: str) -> list[tuple[str, int]] :
     except sqlite3.OperationalError as e:
         print(f"Database error: {e}")
         return []
-
-def delete_database() -> bool:
-    if os.path.exists(DB_FILE):
-        os.remove(DB_FILE)
-        return True
-    else:
-        return False

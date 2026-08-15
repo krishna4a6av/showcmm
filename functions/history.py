@@ -19,6 +19,9 @@ def list_available_shells() -> dict:
 
 
 def choose_shells(available_shells: dict) -> dict:
+    if not available_shells:
+        raise ValueError("No history shell history files found.")
+
     selected = {}
     max_choice = len(available_shells)
 
@@ -35,7 +38,7 @@ def choose_shells(available_shells: dict) -> dict:
         choices = list(range(1, max_choice + 1))
 
     elif not choices or max(choices) > max_choice or min(choices) < 0:
-        raise ValueError("Invalid Choice.")
+        raise RuntimeError("Invalid Choice.")
 
     for i, shell in enumerate(available_shells, 1):
         if i in choices:
@@ -68,18 +71,3 @@ def import_history(shell_name: str, file_path: Path) -> None:
                 batch = []
     if batch:
         insert_commands_bulk(batch)
-
-
-
-def read_history() -> None:
-    shell_type = os.environ.get("SHELL", "Unknown")
-    print(f"Detected Shell: {shell_type}\n")
-
-    available_shells = list_available_shells()
-    if not available_shells:
-        raise ValueError("No history shell history files found.")
-
-    history_files = choose_shells(available_shells)
-
-    for shell, file_path in history_files.items():
-        import_history(shell, file_path)
