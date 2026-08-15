@@ -88,7 +88,9 @@ BASE_URL = "http://localhost:1234/v1"
 ### API_KEY
 The API key is loaded from a .env file:
 
-```API_KEY=your_api_key```
+```
+API_KEY=your_api_key
+```
 
 AI features are optional; command tracking and local statistics do not require an AI API key.
 
@@ -96,16 +98,19 @@ AI features are optional; command tracking and local statistics do not require a
 
 Shell configuration is stored at:
 
-```~/.config/showcmm/config.toml````
+```
+~/.config/showcmm/config.toml
+````
 
 Add another shell to config.toml and specify the parser that matches its history format.
 
 - Available Parsers
-| Parser | Description |
-| --- | --- |
+
+| Parser  | Description                                                  |
+| ------- | ------------------------------------------------------------ |
 | `plain` | Simple line-by-line parsing, suitable for Bash-style history |
-| `zsh` | Parses Zsh history timestamps |
-| `fish` | Parses Fish history files |
+| `zsh`   | Parses Zsh history timestamps                                |
+| `fish`  | Parses Fish history files                                    |
 
 For example:
 ```
@@ -115,7 +120,9 @@ parser = "plain"
 ```
 
 If none of the existing parsers work for your shell, you can add your own parsing logic in:
-```utils/parser.py```
+```
+utils/parser.py
+```
 
 
 ## License
